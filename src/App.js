@@ -25,8 +25,6 @@ class App extends Component {
       "rounds": 0,
       modalIsOpen: false,
     };
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
   }
 
   shuffle = () => {
@@ -47,9 +45,7 @@ class App extends Component {
     this.setState({rounds: 0, actors: actors});
   }
 
-  roll20 = () => {
-    return Math.floor(Math.random() * 19) + 1;
-  }
+  roll20 = () => (Math.floor(Math.random() * 19) + 1);
 
   onAdvance = (e) => {
     if (!this.shuffled) {
