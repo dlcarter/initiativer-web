@@ -3,7 +3,6 @@ import { MdUndo, MdAdd } from 'react-icons/lib/md';
 import Modal from 'react-modal';
 
 import 'papercss/dist/paper.css';
-//import logo from './logo.svg';
 import './App.css';
 
 import ActorList from './ActorList'
@@ -25,8 +24,6 @@ class App extends Component {
       "rounds": 0,
       modalIsOpen: false,
     };
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
   }
 
   shuffle = () => {
@@ -39,21 +36,17 @@ class App extends Component {
       actor.total = actor.roll + actor.initiative;
     }
     console.log("actors", actors);
-    actors.sort(function(a, b) {
-      return b.total - a.total;
-    });
+    actors.sort((a, b) => b.total - a.total);
     actors[0].active = true;
     this.shuffled = true;
     this.setState({rounds: 0, actors: actors});
   }
 
-  roll20 = () => {
-    return Math.floor(Math.random() * 19) + 1;
-  }
+  roll20 = () => (Math.floor(Math.random() * 19) + 1);
 
   onAdvance = (e) => {
     if (!this.shuffled) {
-      return
+      return;
     }
     var actors = this.state.actors;
     var nextActor = null;
