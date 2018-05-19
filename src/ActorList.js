@@ -4,7 +4,7 @@ import Actor from './Actor'
 class ActorList extends Component {
   actorList = () => {
     return this.props.actors.map((actor, index) => (
-      <Actor key={actor.id} actor={actor} onAdvance={this.props.onAdvance} />
+      <Actor key={actor.id} actor={actor} onAdvance={this.props.onAdvance} onDelete={this.props.onDelete} />
     ));
   };
 
