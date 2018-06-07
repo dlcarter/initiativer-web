@@ -1,0 +1,9 @@
+{
+  "characters": [
+    { "name": "Ayef", "initiative": 3 },
+    { "name": "Darrak", "initiative": 3 },
+    { "name": "Grimshaw", "initiative": 3},
+    { "name": "Kleek", "initiative": 3},
+    { "name": "Theron", "initiative": 3}
+  ]
+}

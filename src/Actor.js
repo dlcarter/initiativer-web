@@ -13,9 +13,11 @@ class Actor extends Component {
   };
 
   handleClick = (e) => {
-    const { actor, onAdvance } = this.props;
+    const { actor, onAdvance, onDelete } = this.props;
     if (actor.active) {
       onAdvance(e);
+    } else {
+      onDelete(actor);
     }
   };
 
