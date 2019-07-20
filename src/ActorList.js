@@ -14,7 +14,7 @@ class ActorList extends Component {
         {this.actorList()}
       </div>
     );
-  }
+  };
 }
 
 export default ActorList;

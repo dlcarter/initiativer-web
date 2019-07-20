@@ -6,7 +6,8 @@ import { default as UUID } from 'uuid/v4';
 import 'papercss/dist/paper.css';
 import './App.css';
 
-import ActorList from './ActorList'
+import ActorList from './ActorList';
+import Randomizer from './Randomizer';
 
 Modal.setAppElement('#root');
 
@@ -20,6 +21,7 @@ class App extends Component {
       "shuffled": false,
       modalIsOpen: false,
     };
+    this.randomizer = new Randomizer();
     var self = this;
     setTimeout(function () {
       self.importState();
@@ -72,11 +74,10 @@ class App extends Component {
     localStorage.setItem("state", JSON.stringify(this.state));
   }
 
-  shuffle = () => {
-    console.log("shufflin");
+  shuffleActors = () => {
     var actors = this.state.actors;
     var self = this;
-    this.fetchRolls(this.state.actors.length).then(function(rolls) {
+    this.randomizer.polyRoll(this.state.actors.length).then(function(rolls) { 
       actors.forEach(function(actor) {
         actor.roll = rolls.pop();
         actor.active = false;
@@ -87,35 +88,7 @@ class App extends Component {
       self.setState({rounds: 0, actors: actors, shuffled: true});
       self.storeState();
     });
-  }
-
-  fetchRolls = (size) => {
-    var url = "https://api.random.org/json-rpc/1/invoke";
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "jsonrpc":"2.0",
-        "method":"generateIntegers",
-        "params": {
-          "apiKey":"00000000-0000-0000-0000-000000000000",
-          "n":size,
-          "min":1,
-          "max":20
-        },
-        "id":UUID()
-      })
-    }).then(function(response) {
-      return response.json();
-    }).then(function(json) {
-      console.log("fetchRolls", json.result.random.data);
-      return json.result.random.data;
-    });
-  }
-
-  roll20 = () => (Math.floor(Math.random() * 19) + 1);
+  };
 
   onAdvance = (e) => {
     if (!this.state.shuffled) {
@@ -226,7 +199,7 @@ class App extends Component {
           <h4 className="margin-none">Round {this.state.rounds + 1}</h4>
         </div>
         <div className="row flex-center">
-          <button className="btn-small" onClick={this.shuffle} disabled={this.state.shuffled}>Roll for initiative!</button>
+          <button className="btn-small" onClick={this.shuffleActors} disabled={this.state.shuffled}>Roll for initiative!</button>
           <button className="btn-small" onClick={this.onAdvance} disabled={!this.state.shuffled}>Advance >></button>
           <button className="btn-small" onClick={this.undo} disabled={!this.state.shuffled}><MdUndo /></button>
         </div>

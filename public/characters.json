@@ -1,5 +1,16 @@
 {
   "characters": [
+    { "name": "Alpha", "initiative": 1 },
+    { "name": "Beta", "initiative": 2 },
+    { "name": "Charlie", "initiative": 3 },
+    { "name": "Delta", "initiative": 4 },
+    { "name": "Echo", "initiative": 5 },
+    { "name": "Foxtrot", "initiative": 6 },
+    { "name": "Golf", "initiative": 7 },
+    { "name": "Helo", "initiative": 8 },
+    { "name": "Indigo", "initiative": 9 }
+  ],
+  "parkedCharacters": [
     { "name": "Ayef", "initiative": 3 },
     { "name": "Darrak", "initiative": 3 },
     { "name": "Grimshaw", "initiative": 3},

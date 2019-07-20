@@ -9,7 +9,7 @@ class Actor extends Component {
 
   showMath = () => {
     const { actor } = this.props;
-    return `${actor.roll} + ${actor.initiative}`;
+    return `Roll[${actor.roll}] + Init[${actor.initiative}]`;
   };
 
   handleClick = (e) => {
