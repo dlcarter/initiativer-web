@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { MdUndo, MdAdd, MdRestore } from 'react-icons/lib/md';
-import Modal from 'react-modal';
+//import Modal from 'react-modal';
 import { default as UUID } from 'uuid/v4';
 
 import 'papercss/dist/paper.css';
 import './App.css';
 
 import ActorList from './ActorList';
+import ActorAdder from './ActorAdder';
 import Randomizer from './Randomizer';
-
-Modal.setAppElement('#root');
 
 class App extends Component {
   constructor(props) {
@@ -138,35 +137,6 @@ class App extends Component {
     this.storeState();
   }
 
-  addActor = (e) => {
-    e.preventDefault();
-    var newActor = this.state.new;
-    newActor.roll = 0;
-    newActor.id = UUID();
-    var actors = this.state.actors;
-    actors.push(newActor);
-    this.setState({
-      actors: actors,
-      "new": { "id": -1, "name": "", "roll": 0, "total": 0, "initiative": 0 },
-    });
-    this.closeModal();
-    this.storeState();
-  }
-
-  handleNewName = (e) => {
-    var newActor = this.state.new;
-    newActor.name = e.target.value;
-    this.setState({ new: newActor });
-  }
-
-  handleNewInitiative = (e) => {
-    var newActor = this.state.new;
-    newActor.initiative = parseInt(e.target.value, 10);
-    if (isNaN(newActor.initiative)) {
-      newActor.initiative = 0;
-    }
-    this.setState({ new: newActor });
-  }
 
   onDelete = (actorToDelete) => {
     var actors = this.state.actors;
@@ -180,13 +150,14 @@ class App extends Component {
     this.setState({ actors: actors });
     this.storeState();
   }
-
-  openModal = () => {
-    this.setState({modalIsOpen: true});
-  }
-
-  closeModal = () => {
-    this.setState({modalIsOpen: false});
+  
+  addActor = (actor) => {
+    var actors = this.state.actors;
+    actors.push(actor);
+    this.setState({
+      actors: actors
+    });
+    this.storeState();
   }
 
   render() {
@@ -205,32 +176,12 @@ class App extends Component {
         </div>
         <ActorList actors={this.state.actors} onAdvance={this.onAdvance} onDelete={this.onDelete} />
         <div className="row flex-center">
-          <button className="btn-small" onClick={this.openModal}><MdAdd /></button>
-          <Modal
-            isOpen={this.state.modalIsOpen}
-            onRequestClose={this.closeModal}
-            contentLabel="Example Modal"
-          >
-            <form>
-              <div className="form-group">
-                <label htmlFor="newName">Name</label>
-                <input id="newName" type="text" value={this.state.new.name} onChange={this.handleNewName} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="newInitiative">Initiative bonus</label>
-                <input id="newInitiative" type="text" value={this.state.new.initiative} onChange={this.handleNewInitiative} />
-              </div>
-              <button className="btn-small" onClick={this.addActor}>Save</button>
-              <button className="btn-small" onClick={this.closeModal}>Cancel</button>
-            </form>
-          </Modal>
+          <ActorAdder addActor={this.addActor} />
           <button className="btn-small" onClick={this.resetAll}><MdRestore /></button>
         </div>
       </div>
     );
   }
 }
-
-
 
 export default App;
