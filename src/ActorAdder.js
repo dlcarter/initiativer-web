@@ -10,6 +10,7 @@ class ActorAdder extends Component {
     super(props);
     this.state = {
       "new": { "id": -1, "name": "", "roll": 0, "total": 0, "initiative": 0 },
+      "count": 1,
       modalIsOpen: false
     };
   }
@@ -42,7 +43,15 @@ class ActorAdder extends Component {
     }
     this.setState({ new: newActor });
   }
-
+  
+  handleCount = (e) => {
+    var num = parseInt(e.target.value, 10);
+    if (isNaN(num)) {
+      num = 1;
+    }
+    this.setState({ count: num });
+  }
+  
   onAdd = (e) => {
     const { addActor } = this.props;
 
@@ -50,7 +59,10 @@ class ActorAdder extends Component {
     var newActor = this.state.new;
     newActor.roll = 0;
     newActor.id = UUID();
-    addActor(newActor);
+    for (var i = 0; i < this.state.count; i++) {
+      var dupedActor = JSON.parse(JSON.stringify(newActor));
+      addActor(dupedActor);
+    }
 
 
     this.resetNew();
@@ -68,15 +80,18 @@ class ActorAdder extends Component {
         >
         <form>
             <div className="form-group">
-            <label htmlFor="newName">Name</label>
-            <input id="newName" type="text" value={this.state.new.name} onChange={this.handleNewName} />
+              <label htmlFor="newName">Name</label>
+              <input id="newName" type="text" value={this.state.new.name} onChange={this.handleNewName} />
             </div>
             <div className="form-group">
-            <label htmlFor="newInitiative">Initiative bonus</label>
-            <input id="newInitiative" type="text" value={this.state.new.initiative} onChange={this.handleNewInitiative} />
+              <label htmlFor="newInitiative">Initiative bonus</label>
+              <input id="newInitiative" type="text" value={this.state.new.initiative} onChange={this.handleNewInitiative} />
             </div>
-            <button className="btn-small" onClick={this.onAdd}>Save</button>
-            <button className="btn-small" onClick={this.closeModal}>Cancel</button>
+            <div className="form-group">
+              <label htmlFor="count">Count</label>
+              <input id="count" type="text" value={this.state.count} onChange={this.handleCount} />
+            </div>
+            <button className="btn-small" onClick={this.onAdd}>Save</button> <button className="btn-small" onClick={this.closeModal}>Cancel</button>
         </form>
         </Modal>
       </div>
