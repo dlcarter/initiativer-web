@@ -58,10 +58,9 @@ class ActorAdder extends Component {
     e.preventDefault();
     var newActor = this.state.new;
     newActor.roll = 0;
-    newActor.id = UUID();
     for (var i = 0; i < this.state.count; i++) {
-      var dupedActor = JSON.parse(JSON.stringify(newActor));
-      addActor(dupedActor);
+      newActor.id = UUID();
+      addActor(newActor);
     }
 
 
@@ -90,6 +89,7 @@ class ActorAdder extends Component {
             <div className="form-group">
               <label htmlFor="count">Count</label>
               <input id="count" type="text" value={this.state.count} onChange={this.handleCount} />
+              <button className="btn-small" onClick={this.onChangeCount}>+</button> 
             </div>
             <button className="btn-small" onClick={this.onAdd}>Save</button> <button className="btn-small" onClick={this.closeModal}>Cancel</button>
         </form>

@@ -153,10 +153,12 @@ class App extends Component {
   
   addActor = (actor) => {
     var actors = this.state.actors;
-    actors.push(actor);
+    var dupedActor = JSON.parse(JSON.stringify(actor));
+    actors.push(dupedActor);
     this.setState({
       actors: actors
     });
+
     this.storeState();
   }
 
